@@ -2,6 +2,8 @@ https://www.promptingguide.ai/
 
 https://github.com/dair-ai/Prompt-Engineering-Guide
 
+https://github.com/f/awesome-chatgpt-prompts
+
 https://www.bilibili.com/video/BV1J54y137kt/
 
 https://www.bilibili.com/video/BV1RA411y7Gu/
