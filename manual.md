@@ -1,3 +1,5 @@
+如果你看到什么好资源，添加进来。
+
 https://www.promptingguide.ai/
 
 https://github.com/dair-ai/Prompt-Engineering-Guide
