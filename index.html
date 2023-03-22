@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <title>输入框和按钮</title>
-
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <script src="./config.js"></script>
-
-        <script src="lib/jquery-3.5.1.min.js"></script>
-
-    <script src="lib/showdown.min.js"></script>
-
-<link rel="stylesheet" href="lib/h/default.min.css">
-<script src="lib/h/highlight.min.js"></script>
-
-        <script src="lib/main.js"></script>
-
-<!--
+  <meta charset="utf-8">
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.7.45">
+  <title>输入框和按钮</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="./config.js"></script>
+  <script src="lib/jquery-3.5.1.min.js"></script>
+  <script src="lib/showdown.min.js"></script>
+  <link rel="stylesheet" href="lib/h/default.min.css">
+  <script src="lib/h/highlight.min.js"></script>
+  <script src="lib/main.js"></script>
+  <!--
 td{
 vertical-align:top; 
 }
 -->
-        <style>
 
-table{
-border-collapse: collapse;
-}
+  <style>
 
-        </style>
+  table{
+  border-collapse: collapse;
+  }
 
+  </style>
 </head>
 <body>
-    <!--
+  <!--
     <textarea id="talk" style="width:100%" autofocus placeholder="请输入内容"></textarea>
     -->
-    <!--
+  <!--
     <input type=button value=发送 id=send />
     -->
-    <table id=messages  border="1" cellspacing="0" ></table>
-    <div id=usage ></div>
-    <div id=error ></div>
-    <a href=?2 id=a1 >清空对话</a>
-    <a href=?2 id=a2 target=_blank >开启新对话</a>
-    <input id="talk" style="width:95%" autofocus placeholder="请输入内容，按回车发送"/>
+  <table id="messages" border="1" cellspacing="0"></table>
+  <div id="usage"></div>
+  <div id="error"></div>
+  <a id="a1">清空对话</a> 
+  <a id="a2" target="_blank">开启新对话</a> 
+  <input id="talk" style="width:95%" autofocus="" placeholder="请输入内容，按回车发送">
 </body>
 </html>
