@@ -30,13 +30,23 @@
 
     <input id=talk style="width:100%" autofocus v-if="!multi_line" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" :disabled="sending" />
     <textarea id=talk style="width:100%" autofocus placeholder="请输入内容" v-if="multi_line" :disabled="sending" v-model=newmessage ></textarea>
-    <input type=button v-if="multi_line" @click="send" :value="sending?'等待中...':'发送'" :disabled="sending" />
+    <input type=button v-if="multi_line" @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
 
     <br/>
 
     <input type=checkbox v-model="multi_line"/>多行输入
-    <input type=file @change="previewFiles" />
-    <input type=button value=保存 @click="savemessages" v-if="messages.length>0" />
+    <input type=file @change="previewFiles" :disabled=sending />
+    <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
+    -
+    <input type=button value=删除最新的一次问答 @click="deletenewest" v-if="messages.length>0" :disabled=sending />
+    -
+    <!--
+    <input type=button value=中断 @click="stop" v-if="messages.length>0" :disabled=!sending />
+    -
+    -->
+    <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
+    -
+    <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
     -
     <a :href="'?'+ t " v-if="messages.length>0" >清空</a>
     -
