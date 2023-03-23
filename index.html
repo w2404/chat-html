@@ -42,15 +42,16 @@
     -
     <!--
     <input type=button value=中断 @click="stop" v-if="messages.length>0" :disabled=!sending />
+    需要axios库，来提供ajax的中断
     -
     -->
     <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
     -
     <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
     -
-    <a :href="'?'+ t " v-if="messages.length>0" >清空</a>
+    <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
     -
-    <a :href="'?'+(t+1)" target="_blank" v-if="messages.length>0" >新对话</a>
+    <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
     -
     <a href=https://github.com/w2404/chat-doc target="_blank">帮助教程</a>
 
