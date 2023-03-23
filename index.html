@@ -17,10 +17,11 @@
 <div id="app">
 
     <table border="1" cellspacing="0" @updated=afterrender >
-    <tr v-for="message in messages">
+    <tr v-for="(message,index) in messages">
     <td>{{message.role}}</td>
     <td v-html="mark(message.content)">
     </td>
+    <td><input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> </td>
     </tr>
     </table>
 
@@ -38,13 +39,8 @@
     <input type=file @change="previewFiles" :disabled=sending />
     <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
     -
-    <input type=button value=删除最新的一次问答 @click="deletenewest" v-if="messages.length>0" :disabled=sending />
+    <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
     -
-    <!--
-    <input type=button value=中断 @click="stop" v-if="messages.length>0" :disabled=!sending />
-    需要axios库，来提供ajax的中断
-    -
-    -->
     <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
     -
     <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
