@@ -1,64 +1,71 @@
 
-        textarea{
-           width:100%;
-        }
-        div.message{
-            display: flex;
-        }
-        div.message-user{
-            justify-content: flex-end;
-            text-align:right;
-        }
-        div.role{
-            flex-grow: 1;
-        }
-        div.content{
-            flex-grow: 999;
-        }
-        div.content div.not-editing{
-            /*
-            flex-grow: 1;
-            border:1px dotted;
-            border-radius: 10px;
-            */
-            /*
-            border-bottom:1px solid;
-            */
-            /*用top border的原因是因为role文本是top align，两者对齐*/
-            border-top:1px solid;
-        }
-        .help{
-            float:right;
-        }
-        .prompt{
-            float:right;
-        }
+textarea{
+   width:100%;
+}
+div.message{
+    display: flex;
+}
+div.message-user{
+    justify-content: flex-end;
+    text-align:right;
+}
+div.role{
+    flex-grow: 1;
+}
+div.content{
+    flex-grow: 999;
+}
+div.content div.not-editing{
+    /*
+    flex-grow: 1;
+    border:1px dotted;
+    border-radius: 10px;
+    */
+    /*
+    border-bottom:1px solid;
+    */
+    /*用top border的原因是因为role文本是top align，两者对齐*/
+    border-top:1px solid;
+}
 
-        /*这里选了两个不太伤眼睛的颜色*/
-		body {
-			margin: 0;
-			padding: 0;
-                    background:#F0E68C;
-		}
-		.toolbar {
-			position: fixed;
-transform: translateZ(0);
-			top: 0;
-			left: 0;
-			width: 100%;
-			z-index: 1;
-                        background:#FF6600;
-		}
-		.bottom-toolbar {
-			position: fixed;
-transform: translateZ(0);
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			z-index: 1;
-                        background:#FF6600;
-		}
-		.history {
-                    background:#F0E68C;
-			padding: 20px;
-		}
+/*这里选了两个不太伤眼睛的颜色*/
+body {
+    margin: 0;
+    padding: 0;
+    background:#F0E68C;
+}
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    transform: translateZ(0);
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin:0;
+        
+    width: 100%;
+    z-index: 1;
+    background:#FF6600;
+}
+.bottom-toolbar {
+    position: fixed;
+    transform: translateZ(0);
+    bottom: 0;
+    left: 0;
+    margin:0;
+    padding: 0;
+    width: 100%;
+    z-index: 1;
+    background:#FF6600;
+}
+.history {
+    background:#F0E68C;
+        padding: 20px;
+}
+#bottom2-toolbar {
+    display: flex;
+
+justify-content: space-between;
+}
+

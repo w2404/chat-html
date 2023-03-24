@@ -17,10 +17,13 @@
 
     <div class=toolbar >
         <input type=file @change="previewFiles" :disabled=sending />
-        <input type=range min=2000 max=5000 v-model=tokens_threshold />
-        <span v-if="tokens_threshold<5000" >当tokens超过{{tokens_threshold}}自动保存并删除最早的两条对话。</span>
+
+        <div>
+            <input type=range min=2000 max=5000 v-model=tokens_threshold />
+            <span v-if="tokens_threshold<5000" >当tokens超过{{tokens_threshold}}自动保存并删除最早的两条对话。</span>
+        </div>
        
-        <a href=https://github.com/w2404/chat-doc target="_blank" class=help >帮助</a>
+        <a href=https://github.com/w2404/chat-doc target="_blank" >帮助</a>
     </div>
 
     <div class=history >
@@ -46,7 +49,10 @@
             </div>
         </div>
 
+        <!--
         <div >{{usage}}</div>
+        -->
+
         <div v-html="error" ></div>
     </div>
 
@@ -61,22 +67,23 @@
 
         <br/>
 
-        <input type=checkbox v-model="multi_line"/>多行输入
-        <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
-        -
-        <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
-        -
-        <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
-        -
-        <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
-        -
-        <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
-        -
-        <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
-        
-        <select v-model="selectedPrompt" @change="startPrompt" class=prompt >
-            <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
-        </select>
+        <div id=bottom2-toolbar >
+            <span>
+                <input id=multi_line type=checkbox v-model="multi_line"/>
+                <label for=multi_line >多行输入</label>
+            </span>
+            <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
+            <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
+            <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
+            <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
+            <span v-if="usage.prompt_tokens" >本次提问使用{{usage.prompt_tokens}} tokens，总计使用{{usage.total_tokens}} tokens。</span>
+            <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
+            <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
+            
+            <select v-model="selectedPrompt" @change="startPrompt" >
+                <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
+            </select>
+        </div>
     </div>
 
 </div>
