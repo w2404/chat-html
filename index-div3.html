@@ -11,45 +11,52 @@
     <script src="lib/vue.global.prod.js"></script>
     <script src="lib/h/highlight.min.js"></script>
     <style>
-        table{
-            border-collapse: collapse; 
-            width:100%;
-            table-layout: auto;
-        };
         textarea{
-            width:100%;
-        };
-        td:nth-child(1),td:nth-child(3) , td:nth-child(4) {
-          width: 1%; /* 设置第一列和第三列的宽度 */
-          white-space: nowrap; /* 防止内容换行 */
+            /*
+               用了圆角后,textarea和div的区分就不够清晰了
+           border:1px dotted;
+           */
+           width:100%;
         }
 
-        td:nth-child(2) {
-          width: 100%; /* 设置第二列的宽度 */
-        }
-        tr.role-user {
+
+.#maintable div {}
+
+        div.role-user {
             text-align:right;
+        }
+        div.row{
+            display: flex;
+        }
+        div.role{
+            flex-grow: 1;
+        }
+        div.content{
+            flex-grow: 999;
+            border:1px solid;
+            border-radius: 10px;
+        }
+        div.buttons{
+            flex-grow: 1;
         }
     </style>
   </head>
   <body>
-
 <div id="app">
 
-    <table border="0" cellspacing="0" @updated=afterrender >
-    <tr v-for="(message,index) in messages" :class="'role-'+message.role" >
-    <td >{{message.role=='user'?'':message.role}}</td>
-    <td v-html="mark(message.content)" v-if="!editing[index]" border=1 style=border:1; ></td>
-    <td v-if="editing[index]" >
+    <div v-for="(message,index) in messages" :class="'row role-'+message.role" >
+    <div class=role v-if="message.role!='user'">{{message.role}}</div>
+    <div class=content v-html="mark(message.content)" v-if="!editing[index]" border=1 style=border:1; ></div>
+    <div class=content v-if="editing[index]" >
         <textarea style=width:100%; v-model=message.content ></textarea>
-    </td>
-    <td >{{message.role=='user'?message.role:''}}</td>
-    <td >
+    </div>
+    <div class=role v-if="message.role=='user'">{{message.role=='user'?message.role:''}}</div>
+    <div class=buttons >
         <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
+        <br/>
         <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
-    </td>
-    </tr>
-    </table>
+    </div>
+    </div>
 
     <div >{{usage}}</div>
     <div v-html="error"></div>
