@@ -1,4 +1,4 @@
-更多说明可以看 [README_zh.md](README_zh.md) [README_en.md](README_en.md)
+更多说明可以看gpt老师写的[README_zh.md](README_zh.md) [README_en.md](README_en.md)
 
 # 安装
 
