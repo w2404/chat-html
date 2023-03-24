@@ -30,8 +30,8 @@
             flex-grow: 1;
         }
         div.content div.not-editing{
-            flex-grow: 1;
             /*
+            flex-grow: 1;
             border:1px dotted;
             border-radius: 10px;
             */
@@ -47,13 +47,20 @@
 <div id="app">
 
     <div v-for="(message,index) in messages" :class="'message message-'+message.role" >
-        <div class=role v-if="message.role!='user'">{{message.role}}</div>
+        <div class=role v-if="message.role!='user'">
+            {{message.role}}
+            <br/>
+            <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
+            <br/>
+            <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
+        </div>
         <div class="content" >
             <div class=not-editing v-if="!editing[index]" v-html="mark(message.content)" ></div>
             <textarea v-if="editing[index]"  v-model=message.content ></textarea>
         </div>
-        <div class=role v-if="message.role=='user'">{{message.role}}</div>
-        <div class=buttons >
+        <div class=role v-if="message.role=='user'">
+            {{message.role}}
+            <br/>
             <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
             <br/>
             <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
