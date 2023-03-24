@@ -59,18 +59,18 @@
 
     <div class=bottom-toolbar >
 
-        <input id=talk style="width:100%" autofocus v-if="!multi_line" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
-        <!--:disabled="sending" />-->
-        <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line" v-model=newmessage ></textarea>
-        <!--:disabled="sending" -->
-        <input type=button v-if="multi_line" @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
-
-        <br/>
+        <div id=bottom3-toolbar >
+            <input id=talk style="width:100%" autofocus v-if="multi_line<2" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
+            <!--:disabled="sending" />-->
+            <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line>1" :rows=multi_line v-model=newmessage ></textarea>
+            <!--:disabled="sending" -->
+            <input type=button @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
+        </div>
 
         <div id=bottom2-toolbar >
             <span>
-                <input id=multi_line type=checkbox v-model="multi_line"/>
-                <label for=multi_line >多行输入</label>
+                <input type=range min=1 max=50 v-model=multi_line />
+                {{multi_line}}行输入框
             </span>
             <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
             <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />

@@ -65,7 +65,11 @@ body {
 }
 #bottom2-toolbar {
     display: flex;
+    justify-content: space-between;
+}
 
-justify-content: space-between;
+#bottom3-toolbar {
+    display: flex;
+    justify-content: space-between;
 }
 
