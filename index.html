@@ -11,52 +11,61 @@
     <script src="lib/vue.global.prod.js"></script>
     <script src="lib/h/highlight.min.js"></script>
     <style>
-        table{
-            border-collapse: collapse; 
-            width:100%;
-            table-layout: auto;
-        };
         textarea{
-            width:100%;
-        };
-        td:nth-child(1),td:nth-child(3) , td:nth-child(4) {
-          width: 1%; /* 设置第一列和第三列的宽度 */
-          white-space: nowrap; /* 防止内容换行 */
+           width:100%;
         }
-
-        td:nth-child(2) {
-          width: 100%; /* 设置第二列的宽度 */
+        div.message{
+            display: flex;
         }
-        tr.role-user {
+        div.message-user div.content {
             text-align:right;
+        }
+        div.role{
+            flex-grow: 1;
+        }
+        div.content{
+            flex-grow: 999;
+        }
+        div.buttons{
+            flex-grow: 1;
+        }
+        div.content div.not-editing{
+            flex-grow: 1;
+            /*
+            border:1px dotted;
+            border-radius: 10px;
+            */
+            /*
+            border-bottom:1px solid;
+            */
+            /*用top border的原因是因为role文本是top align，两者对齐*/
+            border-top:1px solid;
         }
     </style>
   </head>
   <body>
-
 <div id="app">
 
-    <table border="0" cellspacing="0" @updated=afterrender >
-    <tr v-for="(message,index) in messages" :class="'role-'+message.role" >
-    <td >{{message.role=='user'?'':message.role}}</td>
-    <td v-html="mark(message.content)" v-if="!editing[index]" border=1 style=border:1; ></td>
-    <td v-if="editing[index]" >
-        <textarea style=width:100%; v-model=message.content ></textarea>
-    </td>
-    <td >{{message.role=='user'?message.role:''}}</td>
-    <td >
-        <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
-        <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
-    </td>
-    </tr>
-    </table>
+    <div v-for="(message,index) in messages" :class="'message message-'+message.role" >
+        <div class=role v-if="message.role!='user'">{{message.role}}</div>
+        <div class="content" >
+            <div class=not-editing v-if="!editing[index]" v-html="mark(message.content)" ></div>
+            <textarea v-if="editing[index]"  v-model=message.content ></textarea>
+        </div>
+        <div class=role v-if="message.role=='user'">{{message.role}}</div>
+        <div class=buttons >
+            <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
+            <br/>
+            <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
+        </div>
+    </div>
 
     <div >{{usage}}</div>
     <div v-html="error"></div>
 
     <input id=talk style="width:100%" autofocus v-if="!multi_line" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
     <!--:disabled="sending" />-->
-    <textarea id=talk style="box-sizing:border-box;width:100%;" autofocus placeholder="请输入内容" v-if="multi_line" v-model=newmessage ></textarea>
+    <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line" v-model=newmessage ></textarea>
     <!--:disabled="sending" -->
     <input type=button v-if="multi_line" @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
 
