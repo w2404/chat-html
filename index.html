@@ -10,47 +10,12 @@
     <link rel="stylesheet" href="lib/h/default.min.css" />
     <script src="lib/vue.global.prod.js"></script>
     <script src="lib/h/highlight.min.js"></script>
-    <style>
-        textarea{
-           width:100%;
-        }
-        div.message{
-            display: flex;
-        }
-        div.message-user{
-            justify-content: flex-end;
-            text-align:right;
-        }
-        div.role{
-            flex-grow: 1;
-        }
-        div.content{
-            flex-grow: 999;
-        }
-        div.content div.not-editing{
-            /*
-            flex-grow: 1;
-            border:1px dotted;
-            border-radius: 10px;
-            */
-            /*
-            border-bottom:1px solid;
-            */
-            /*用top border的原因是因为role文本是top align，两者对齐*/
-            border-top:1px solid;
-        }
-        .help{
-            float:right;
-        }
-        .prompt{
-            float:right;
-        }
-    </style>
+    <link rel="stylesheet" href="lib/style.css" />
   </head>
   <body>
 <div id="app">
 
-    <div id=top-toolbar >
+    <div class=toolbar >
         <input type=file @change="previewFiles" :disabled=sending />
         <input type=range min=2000 max=5000 v-model=tokens_threshold />
         <span v-if="tokens_threshold<5000" >当tokens超过{{tokens_threshold}}自动保存并删除最早的两条对话。</span>
@@ -58,54 +23,61 @@
         <a href=https://github.com/w2404/chat-doc target="_blank" class=help >帮助</a>
     </div>
 
-    <div v-for="(message,index) in messages" :class="'message message-'+message.role" >
-        <div class=role v-if="message.role!='user'">
-            {{message.role}}
-            <br/>
-            <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
-            <br/>
-            <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
+    <div class=history >
+
+        <div v-for="(message,index) in messages" :class="'message message-'+message.role" >
+            <div class=role v-if="message.role!='user'">
+                {{message.role}}
+                <br/>
+                <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
+                <br/>
+                <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
+            </div>
+            <div class="content" >
+                <span class=not-editing v-if="!editing[index]" v-html="mark(message.content)" ></span>
+                <textarea v-if="editing[index]"  v-model=message.content ></textarea>
+            </div>
+            <div class=role v-if="message.role=='user'">
+                {{message.role}}
+                <br/>
+                <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
+                <br/>
+                <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
+            </div>
         </div>
-        <div class="content" >
-            <span class=not-editing v-if="!editing[index]" v-html="mark(message.content)" ></span>
-            <textarea v-if="editing[index]"  v-model=message.content ></textarea>
-        </div>
-        <div class=role v-if="message.role=='user'">
-            {{message.role}}
-            <br/>
-            <input type=button :value="editing[index]?'完成':'编辑'" @click=editmessage(index) :disabled="sending" /> 
-            <br/>
-            <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
-        </div>
+
+        <div >{{usage}}</div>
+        <div v-html="error" ></div>
     </div>
 
-    <div >{{usage}}</div>
-    <div v-html="error" ></div>
 
-    <input id=talk style="width:100%" autofocus v-if="!multi_line" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
-    <!--:disabled="sending" />-->
-    <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line" v-model=newmessage ></textarea>
-    <!--:disabled="sending" -->
-    <input type=button v-if="multi_line" @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
+    <div class=bottom-toolbar >
 
-    <br/>
+        <input id=talk style="width:100%" autofocus v-if="!multi_line" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
+        <!--:disabled="sending" />-->
+        <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line" v-model=newmessage ></textarea>
+        <!--:disabled="sending" -->
+        <input type=button v-if="multi_line" @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
 
-    <input type=checkbox v-model="multi_line"/>多行输入
-    <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
-    -
-    <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
-    -
-    <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
-    -
-    <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
-    -
-    <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
-    -
-    <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
-    
-    <select v-model="selectedPrompt" @change="startPrompt" class=prompt >
-        <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
-    </select>
+        <br/>
+
+        <input type=checkbox v-model="multi_line"/>多行输入
+        <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
+        -
+        <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
+        -
+        <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
+        -
+        <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
+        -
+        <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
+        -
+        <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
+        
+        <select v-model="selectedPrompt" @change="startPrompt" class=prompt >
+            <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
+        </select>
+    </div>
 
 </div>
     <script src="prompts/prompts.js"></script>
