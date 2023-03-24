@@ -70,13 +70,13 @@
         <div id=bottom2-toolbar >
             <span>
                 <input type=range min=1 max=50 v-model=multi_line />
-                {{multi_line}}行输入框
+                {{multi_line}}行
             </span>
             <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
             <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
             <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
             <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
-            <span v-if="usage.prompt_tokens" >本次提问使用{{usage.prompt_tokens}} tokens，总计使用{{usage.total_tokens}} tokens。</span>
+            <span v-if="usage.prompt_tokens" >tokens:{{usage.prompt_tokens}}❓{{usage.completion_tokens}}💬{{usage.total_tokens}}📊</span>
             <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
             <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
             

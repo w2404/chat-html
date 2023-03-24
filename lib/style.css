@@ -72,4 +72,10 @@ body {
     display: flex;
     justify-content: space-between;
 }
+input[type="range"] {
+  width: 100px;
+}
+select{
+  width: 100px;
+}
 
