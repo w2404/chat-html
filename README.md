@@ -16,13 +16,8 @@
 
 # 角色扮演
 
-网页内置提供的角色扮演，都是从https://github.com/f/awesome-chatgpt-prompts下载转换的
+网页内置提供的角色扮演，都是从https://github.com/f/awesome-chatgpt-prompts 下载转换的。它提供的都是英文角色。下载地址是 https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv 它是csv格式，非常的工整，所以我可以用python批量读取和处理它。
 
-https://github.com/f/awesome-chatgpt-prompts 提供的英文角色，是保存在 https://github.com/f/awesome-chatgpt-prompts/blob/main/prompts.csv
-
-它是csv的格式，非常的工整，所以我可以用python批量读取和处理它
-
-下载和转换的代码都存放在[prompts](prompts)
+下载和转换的代码都存放在[prompts](prompts)。如果他们更新了，你可以在这个目录中重新下载和转换。
 
 相比之下https://github.com/PlexPt/awesome-chatgpt-prompts-zh/ 提供的中文角色，是保存在分散的md文件中的，不是那么工整。所以我暂时不想用python批量处理它们。除非你有需要。
-
