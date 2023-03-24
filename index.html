@@ -17,7 +17,8 @@
         div.message{
             display: flex;
         }
-        div.message-user div.content {
+        div.message-user{
+            justify-content: flex-end;
             text-align:right;
         }
         div.role{
@@ -25,9 +26,6 @@
         }
         div.content{
             flex-grow: 999;
-        }
-        div.buttons{
-            flex-grow: 1;
         }
         div.content div.not-editing{
             /*
@@ -41,10 +39,24 @@
             /*用top border的原因是因为role文本是top align，两者对齐*/
             border-top:1px solid;
         }
+        .help{
+            float:right;
+        }
+        .prompt{
+            float:right;
+        }
     </style>
   </head>
   <body>
 <div id="app">
+
+    <div id=top-toolbar >
+        <input type=file @change="previewFiles" :disabled=sending />
+        <input type=range min=2000 max=5000 v-model=tokens_threshold />
+        <span v-if="tokens_threshold<4000" >当tokens超过{{tokens_threshold}}自动删除顶部两条对话。这可以给你更连续的聊天体验。不过这里的长度估算是不准确的。</span>
+       
+        <a href=https://github.com/w2404/chat-doc target="_blank" class=help >帮助</a>
+    </div>
 
     <div v-for="(message,index) in messages" :class="'message message-'+message.role" >
         <div class=role v-if="message.role!='user'">
@@ -55,7 +67,7 @@
             <input type=button value=删除 @click=deletemessage(index) :disabled="sending" /> 
         </div>
         <div class="content" >
-            <div class=not-editing v-if="!editing[index]" v-html="mark(message.content)" ></div>
+            <span class=not-editing v-if="!editing[index]" v-html="mark(message.content)" ></span>
             <textarea v-if="editing[index]"  v-model=message.content ></textarea>
         </div>
         <div class=role v-if="message.role=='user'">
@@ -68,7 +80,7 @@
     </div>
 
     <div >{{usage}}</div>
-    <div v-html="error"></div>
+    <div v-html="error" ></div>
 
     <input id=talk style="width:100%" autofocus v-if="!multi_line" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
     <!--:disabled="sending" />-->
@@ -79,7 +91,6 @@
     <br/>
 
     <input type=checkbox v-model="multi_line"/>多行输入
-    <input type=file @change="previewFiles" :disabled=sending />
     <input type=button value=保存 @click="savemessages" v-if="messages.length>0" :disabled=sending />
     -
     <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
@@ -91,12 +102,10 @@
     <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
     -
     <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
-    -
-    <select v-model="selectedPrompt" @change="startPrompt" >
+    
+    <select v-model="selectedPrompt" @change="startPrompt" class=prompt >
         <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
     </select>
-    -
-    <a href=https://github.com/w2404/chat-doc target="_blank">帮助教程</a>
 
 </div>
     <script src="prompts/prompts.js"></script>
