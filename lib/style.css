@@ -1,21 +1,25 @@
-
-textarea{
-   width:100%;
+textarea {
+    width: 100%;
 }
-div.message{
+
+div.message {
     display: flex;
 }
-div.message-user{
+
+div.message-user {
     justify-content: flex-end;
-    text-align:right;
+    text-align: right;
 }
-div.role{
+
+div.role {
     flex-grow: 1;
 }
-div.content{
+
+div.content {
     flex-grow: 999;
 }
-div.content div.not-editing{
+
+div.content div.not-editing {
     /*
     flex-grow: 1;
     border:1px dotted;
@@ -25,15 +29,16 @@ div.content div.not-editing{
     border-bottom:1px solid;
     */
     /*用top border的原因是因为role文本是top align，两者对齐*/
-    border-top:1px solid;
+    border-top: 1px solid;
 }
 
 /*这里选了两个不太伤眼睛的颜色*/
 body {
     margin: 0;
     padding: 0;
-    background:#F0E68C;
+    background: #F0E68C;
 }
+
 .toolbar {
     display: flex;
     justify-content: space-between;
@@ -42,27 +47,30 @@ body {
     top: 0;
     left: 0;
     padding: 0;
-    margin:0;
-        
+    margin: 0;
+
     width: 100%;
     z-index: 1;
-    background:#FF6600;
+    background: #FF6600;
 }
+
 .bottom-toolbar {
     position: fixed;
     transform: translateZ(0);
     bottom: 0;
     left: 0;
-    margin:0;
+    margin: 0;
     padding: 0;
     width: 100%;
     z-index: 1;
-    background:#FF6600;
+    background: #FF6600;
 }
+
 .history {
-    background:#F0E68C;
-        padding: 20px;
+    background: #F0E68C;
+    padding: 20px;
 }
+
 #bottom2-toolbar {
     display: flex;
     justify-content: space-between;
@@ -72,10 +80,41 @@ body {
     display: flex;
     justify-content: space-between;
 }
+
 input[type="range"] {
-  width: 100px;
-}
-select{
-  width: 100px;
+    width: 100px;
 }
 
+select {
+    width: 100px;
+}
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 2px solid;
+    color: blue;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
