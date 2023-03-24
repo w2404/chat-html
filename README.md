@@ -1,3 +1,5 @@
+更多说明可以看 [README_zh.md](README_zh.md) [README_en.md](README_en.md)
+
 # 安装
 
 首先，点击右上角绿色按钮code，下载zip，然后解压。
