@@ -53,7 +53,7 @@
     <div id=top-toolbar >
         <input type=file @change="previewFiles" :disabled=sending />
         <input type=range min=2000 max=5000 v-model=tokens_threshold />
-        <span v-if="tokens_threshold<5000" >当tokens超过{{tokens_threshold}}自动删除最早的两条对话。</span>
+        <span v-if="tokens_threshold<5000" >当tokens超过{{tokens_threshold}}自动保存并删除最早的两条对话。</span>
        
         <a href=https://github.com/w2404/chat-doc target="_blank" class=help >帮助</a>
     </div>
