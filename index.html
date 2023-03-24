@@ -92,9 +92,14 @@
     -
     <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
     -
+    <select v-model="selectedPrompt" @change="startPrompt" >
+        <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
+    </select>
+    -
     <a href=https://github.com/w2404/chat-doc target="_blank">帮助教程</a>
 
 </div>
+    <script src="prompts/prompts.js"></script>
     <script src="lib/k.js"></script>
   </body>
 </html>
