@@ -76,7 +76,7 @@
             <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
             <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
             <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
-            <span v-if="usage.prompt_tokens" >tokens:{{usage.prompt_tokens}}❓{{usage.completion_tokens}}💬{{usage.total_tokens}}📊</span>
+            <span v-if="usage.prompt_tokens" >tokens:{{usage.prompt_tokens}}❓+{{usage.completion_tokens}}💬={{usage.total_tokens}}</span>
             <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
             <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
             
