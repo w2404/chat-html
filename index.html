@@ -65,6 +65,7 @@
             <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line>1" :rows=multi_line v-model=newmessage ></textarea>
             <!--:disabled="sending" -->
             <input type=button @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
+            <input type=button @click="senden" :value="sending?'等待中...':'发送🅴🅽'" :disabled="sending" />
         </div>
 
         <div id=bottom2-toolbar >
