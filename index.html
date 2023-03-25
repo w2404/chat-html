@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <title>？</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="./config.js"></script>
     <script src="lib/jquery-3.5.1.min.js"></script>
     <script src="lib/showdown.min.js"></script>
     <link rel="stylesheet" href="lib/h/default.min.css" />
@@ -66,8 +65,17 @@
             <!--:disabled="sending" />-->
             <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line>1" :rows=multi_line v-model=newmessage ></textarea>
             <!--:disabled="sending" -->
+
             <input type=button @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
+
+            <select v-model="selectedSpell" :disabled=sending style=width:100px; >
+                <option v-for="s in prefix_spells" :value="s.value">{{s.name}}</option>
+            </select>
+
+            <!--
             <input type=button @click="senden" :value="sending?'等待中...':'发送🅴🅽'" :disabled="sending" />
+            <input type=button @click="sendzh" :value="sending?'等待中...':'发送🈭'" :disabled="sending" />
+            -->
         </div>
 
         <div id=bottom2-toolbar >
@@ -93,13 +101,15 @@
             <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
             <a :href="'?'+(new Date().getTime()+1)" target="_blank" v-if="messages.length>0" >新对话</a>
             
-            <select v-model="selectedPrompt" @change="startPrompt" :disabled=sending >
+            <select v-model="selectedPrompt" @change="startPrompt" :disabled=sending style=width:100px; >
                 <option v-for="p in prompts" :value="p.prompt">{{p.act}}</option>
             </select>
         </div>
     </div>
 
 </div>
+    <script src="./config.js"></script>
+    <script src="./prefixspells.js"></script>
     <script src="prompts/prompts.js"></script>
     <script src="lib/k.js"></script>
   </body>
