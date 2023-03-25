@@ -61,9 +61,9 @@
     <div class=bottom-toolbar >
 
         <div id=bottom3-toolbar >
-            <input id=talk style="width:100%" autofocus v-if="multi_line<2" @keypress="send2" v-model=newmessage :placeholder="sending?'等待中...':'请输入内容，按回车发送'" />
+            <input id=talk style="width:100%" autofocus v-if="multi_line<2" @keypress="send2" v-model=newmessage :placeholder="selectedSpell+'请输入内容，按回车发送'" />
             <!--:disabled="sending" />-->
-            <textarea id=talk autofocus placeholder="请输入内容" v-if="multi_line>1" :rows=multi_line v-model=newmessage ></textarea>
+            <textarea id=talk autofocus :placeholder="selectedSpell+'请输入内容'" v-if="multi_line>1" :rows=multi_line v-model=newmessage ></textarea>
             <!--:disabled="sending" -->
 
             <input type=button @click="sendnew" :value="sending?'等待中...':'发送'" :disabled="sending" />
