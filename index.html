@@ -16,11 +16,13 @@
 <div id="app">
 
     <div class=toolbar >
-        <input type=file @change="previewFiles" :disabled=sending />
 
         <div>
+            <input type=file @change="previewFiles" :disabled=sending />
+            <input type=range min=0 max=2 step=0.01 v-model=temperature />
+            <span>温度：{{temperature }}</span>
             <input type=range min=2000 max=5000 v-model=tokens_threshold />
-            <span v-if="tokens_threshold<5000" >当tokens超过{{tokens_threshold}}自动保存并删除最早的两条对话。</span>
+            <span>tokens阀值：{{tokens_threshold<5000?tokens_threshold:''}}</span>
         </div>
        
         <a href=https://github.com/w2404/chat-doc target="_blank" >帮助</a>
